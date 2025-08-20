@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  leaptrader:
+    build:
+      context: ../..
+      dockerfile: deployment/docker/Dockerfile
+    container_name: leaptrader-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=${REDIS_URL}
+      - TWELVEDATA_API_KEY=${TWELVEDATA_API_KEY}
+      - ALPACA_API_KEY=${ALPACA_API_KEY}
+      - ALPACA_SECRET_KEY=${ALPACA_SECRET_KEY}
+      - TRADIER_API_KEY=${TRADIER_API_KEY}
+      - JWT_SECRET=${JWT_SECRET}
+      - CORS_ORIGIN=${CORS_ORIGIN}
+    volumes:
+      - app_logs:/app/logs
+      - app_data:/app/data
+    networks:
+      - leaptrader_network
+    depends_on:
+      - redis
+      - postgres
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.leaptrader.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.leaptrader.tls=true"
+      - "traefik.http.routers.leaptrader.tls.certresolver=letsencrypt"
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: leaptrader-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - leaptrader_network
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7-alpine
+    container_name: leaptrader-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - redis_data:/data
+    networks:
+      - leaptrader_network
+    ports:
+      - "6379:6379"
+
+  nginx:
+    image: nginx:alpine
+    container_name: leaptrader-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./ssl:/etc/ssl/certs
+      - nginx_logs:/var/log/nginx
+    networks:
+      - leaptrader_network
+    depends_on:
+      - leaptrader
+
+volumes:
+  postgres_data:
+  redis_data:
+  app_logs:
+  app_data:
+  nginx_logs:
+
+networks:
+  leaptrader_network:
+    driver: bridge

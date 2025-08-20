@@ -1,0 +1,355 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Color Palette - HSL format for consistency */
+  --background: hsl(220, 13%, 9%);
+  --foreground: hsl(0, 0%, 100%);
+  
+  --card: hsl(220, 13%, 11%);
+  --card-foreground: hsl(0, 0%, 100%);
+  
+  --popover: hsl(220, 13%, 11%);
+  --popover-foreground: hsl(0, 0%, 100%);
+  
+  --primary: hsl(211, 100%, 50%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  
+  --secondary: hsl(217, 32%, 17%);
+  --secondary-foreground: hsl(0, 0%, 100%);
+  
+  --muted: hsl(217, 32%, 17%);
+  --muted-foreground: hsl(215, 20%, 65%);
+  
+  --accent: hsl(217, 32%, 17%);
+  --accent-foreground: hsl(0, 0%, 100%);
+  
+  --destructive: hsl(0, 84%, 60%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  
+  --border: hsl(217, 32%, 19%);
+  --input: hsl(217, 32%, 19%);
+  --ring: hsl(211, 100%, 50%);
+  
+  --chart-1: hsl(211, 100%, 50%);
+  --chart-2: hsl(267, 57%, 57%);
+  --chart-3: hsl(142, 76%, 36%);
+  --chart-4: hsl(32, 98%, 56%);
+  --chart-5: hsl(0, 84%, 60%);
+  
+  /* Sidebar */
+  --sidebar-background: hsl(220, 13%, 11%);
+  --sidebar-foreground: hsl(215, 20%, 65%);
+  --sidebar-primary: hsl(211, 100%, 50%);
+  --sidebar-primary-foreground: hsl(0, 0%, 100%);
+  --sidebar-accent: hsl(217, 32%, 17%);
+  --sidebar-accent-foreground: hsl(0, 0%, 100%);
+  --sidebar-border: hsl(217, 32%, 19%);
+  --sidebar-ring: hsl(211, 100%, 50%);
+  
+  /* Trading specific colors */
+  --trading-dark: hsl(220, 13%, 9%);
+  --trading-card: hsl(220, 13%, 11%);
+  --trading-border: hsl(217, 32%, 19%);
+  --accent-blue: hsl(211, 100%, 50%);
+  --accent-purple: hsl(267, 57%, 57%);
+  --success-green: hsl(142, 76%, 36%);
+  --warning-orange: hsl(32, 98%, 56%);
+  --danger-red: hsl(0, 84%, 60%);
+  
+  --radius: 0.75rem;
+  
+  /* Font variables */
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+.dark {
+  --background: hsl(220, 13%, 9%);
+  --foreground: hsl(0, 0%, 100%);
+  --card: hsl(220, 13%, 11%);
+  --card-foreground: hsl(0, 0%, 100%);
+  --popover: hsl(220, 13%, 11%);
+  --popover-foreground: hsl(0, 0%, 100%);
+  --primary: hsl(211, 100%, 50%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(217, 32%, 17%);
+  --secondary-foreground: hsl(0, 0%, 100%);
+  --muted: hsl(217, 32%, 17%);
+  --muted-foreground: hsl(215, 20%, 65%);
+  --accent: hsl(217, 32%, 17%);
+  --accent-foreground: hsl(0, 0%, 100%);
+  --destructive: hsl(0, 84%, 60%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --border: hsl(217, 32%, 19%);
+  --input: hsl(217, 32%, 19%);
+  --ring: hsl(211, 100%, 50%);
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-sans);
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+/* Glass card styling */
+.glass-card {
+  background: rgba(22, 27, 34, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(48, 54, 61, 0.8);
+  border-radius: 24px;
+}
+
+/* Navigation item styling */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  color: hsl(var(--sidebar-foreground));
+  text-decoration: none;
+  transition: all 0.2s ease;
+  position: relative;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: hsl(var(--sidebar-primary-foreground));
+  transform: translateX(4px);
+}
+
+.nav-item.active {
+  background: rgba(0, 122, 255, 0.2);
+  color: hsl(var(--sidebar-primary));
+  border: 1px solid rgba(0, 122, 255, 0.3);
+}
+
+.nav-item.active::after {
+  content: '';
+  position: absolute;
+  right: 8px;
+  width: 6px;
+  height: 6px;
+  background: hsl(var(--sidebar-primary));
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 122, 255, 0.5);
+}
+
+/* Status badges */
+.status-badge-active {
+  @apply px-2 py-1 text-xs rounded-full border;
+  background: rgba(48, 209, 88, 0.2);
+  color: hsl(var(--success-green));
+  border-color: rgba(48, 209, 88, 0.3);
+}
+
+.status-badge-monitoring {
+  @apply px-2 py-1 text-xs rounded-full border;
+  background: rgba(255, 149, 0, 0.2);
+  color: hsl(var(--warning-orange));
+  border-color: rgba(255, 149, 0, 0.3);
+}
+
+.status-badge-cancelled {
+  @apply px-2 py-1 text-xs rounded-full border;
+  background: rgba(255, 69, 58, 0.2);
+  color: hsl(var(--danger-red));
+  border-color: rgba(255, 69, 58, 0.3);
+}
+
+/* Strategy badges */
+.strategy-badge-stock-replacement {
+  @apply px-2 py-1 text-xs rounded-full border;
+  background: rgba(0, 122, 255, 0.2);
+  color: hsl(var(--accent-blue));
+  border-color: rgba(0, 122, 255, 0.3);
+}
+
+.strategy-badge-covered-call {
+  @apply px-2 py-1 text-xs rounded-full border;
+  background: rgba(88, 86, 214, 0.2);
+  color: hsl(var(--accent-purple));
+  border-color: rgba(88, 86, 214, 0.3);
+}
+
+.strategy-badge-protective-put {
+  @apply px-2 py-1 text-xs rounded-full border;
+  background: rgba(48, 209, 88, 0.2);
+  color: hsl(var(--success-green));
+  border-color: rgba(48, 209, 88, 0.3);
+}
+
+.strategy-badge-iron-condor {
+  @apply px-2 py-1 text-xs rounded-full border;
+  background: rgba(255, 149, 0, 0.2);
+  color: hsl(var(--warning-orange));
+  border-color: rgba(255, 149, 0, 0.3);
+}
+
+/* Symbol avatars */
+.symbol-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+}
+
+/* Gradient backgrounds for different symbols */
+.symbol-avatar-tech {
+  background: linear-gradient(135deg, hsl(var(--accent-blue)), hsl(var(--accent-purple)));
+}
+
+.symbol-avatar-finance {
+  background: linear-gradient(135deg, hsl(var(--success-green)), hsl(var(--accent-blue)));
+}
+
+.symbol-avatar-energy {
+  background: linear-gradient(135deg, hsl(var(--warning-orange)), hsl(var(--danger-red)));
+}
+
+.symbol-avatar-other {
+  background: linear-gradient(135deg, hsl(var(--muted)), hsl(var(--secondary)));
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--trading-card));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--trading-border));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted));
+}
+
+/* Smooth animations */
+* {
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  border: 2px solid hsl(var(--muted));
+  border-top: 2px solid hsl(var(--primary));
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Profit/Loss colors */
+.text-profit {
+  color: hsl(var(--success-green));
+}
+
+.text-loss {
+  color: hsl(var(--danger-red));
+}
+
+.text-neutral {
+  color: hsl(var(--muted-foreground));
+}
+
+/* Button variants for trading actions */
+.btn-buy {
+  @apply bg-green-600/20 text-green-400 border-green-600/30 hover:bg-green-600/30;
+}
+
+.btn-sell {
+  @apply bg-red-600/20 text-red-400 border-red-600/30 hover:bg-red-600/30;
+}
+
+.btn-hold {
+  @apply bg-yellow-600/20 text-yellow-400 border-yellow-600/30 hover:bg-yellow-600/30;
+}
+
+/* Risk level indicators */
+.risk-low {
+  color: hsl(var(--success-green));
+}
+
+.risk-moderate {
+  color: hsl(var(--warning-orange));
+}
+
+.risk-high {
+  color: hsl(var(--danger-red));
+}
+
+/* Chart container styling */
+.chart-container {
+  background: rgba(22, 27, 34, 0.6);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 1024px) {
+  .nav-item {
+    justify-content: center;
+    padding: 12px 8px;
+  }
+  
+  .nav-item span {
+    display: none;
+  }
+  
+  .glass-card {
+    border-radius: 16px;
+    padding: 16px;
+  }
+}
+
+/* Print styles */
+@media print {
+  .nav-item, .glass-card {
+    background: white !important;
+    color: black !important;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .glass-card {
+    background: hsl(var(--card)) !important;
+    border: 2px solid hsl(var(--border)) !important;
+  }
+}
