@@ -99,7 +99,7 @@ module.exports = {
       user: 'leaptrader',
       host: 'your-vps-ip',
       ref: 'origin/main',
-      repo: 'https://github.com/yourusername/leaptrader.git',
+      repo: 'https://github.com/HaloHealthAfrica/leaptrader.git',
       path: '/var/www/leaptrader',
       
       'pre-deploy-local': '',

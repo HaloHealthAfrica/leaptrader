@@ -37,7 +37,7 @@ LeapTrader/
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/leaptrader.git
+git clone https://github.com/HaloHealthAfrica/leaptrader.git
 cd leaptrader
 
 # Install dependencies
@@ -62,7 +62,7 @@ For Hostinger VPS deployment with Claude Code:
 # Using Git-based deployment (recommended)
 cd LeapTradeEngine/deployment/scripts
 chmod +x git-deploy.sh
-./git-deploy.sh -h YOUR_VPS_IP -r https://github.com/yourusername/leaptrader.git
+./git-deploy.sh -h YOUR_VPS_IP -r https://github.com/HaloHealthAfrica/leaptrader.git
 
 # Using zip-based deployment (alternative)
 chmod +x create-zip.sh zip-deploy.sh

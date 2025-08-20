@@ -11,19 +11,37 @@ Complete deployment guide for deploying your LeapTrader LEAPS options trading sy
 
 ## 🎯 Quick Start (Automated Deployment)
 
-### Option 1: One-Command Deployment
+### Option 1: Git-Based Deployment (Recommended)
 
 ```bash
 # Make deployment script executable
-chmod +x deployment/scripts/deploy.sh
+chmod +x deployment/scripts/git-deploy.sh
 
-# Run automated deployment
-./deployment/scripts/deploy.sh
+# Deploy from GitHub repository
+./deployment/scripts/git-deploy.sh -h YOUR_VPS_IP -r https://github.com/HaloHealthAfrica/leaptrader.git
 ```
 
-This script will:
-- Build your application locally
+### Option 2: Zip-Based Deployment
+
+```bash
+# Create deployment package
+chmod +x deployment/scripts/create-zip.sh
+./deployment/scripts/create-zip.sh
+
+# Deploy to VPS
+chmod +x deployment/scripts/zip-deploy.sh
+./deployment/scripts/zip-deploy.sh -h YOUR_VPS_IP -f leaptrader-deployment.zip
+```
+
+**Git-based deployment benefits:**
+- Eliminates zip file uploads
+- Version control integration  
+- Easy updates with `git pull`
+- Better change tracking
+
+**Both scripts will:**
 - Set up the VPS environment
+- Install Claude Code for development
 - Deploy and start your application
 - Configure SSL (optional)
 
@@ -119,8 +137,9 @@ CORS_ORIGIN=https://your-domain.com
 
 ### 4.1 Using Git (Recommended)
 ```bash
-cd /var/www/leaptrader
-git clone https://github.com/yourusername/leaptrader.git .
+cd /var/www
+git clone https://github.com/HaloHealthAfrica/leaptrader.git leaptrader
+cd leaptrader/LeapTradeEngine
 npm ci --only=production
 npm run build
 ```
